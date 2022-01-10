@@ -3,7 +3,7 @@ import time
 
 def read_input(path):
     with open(path, 'r') as f:
-        file = f.readlines()
+        file = f.read().splitlines()
     return file
 
 def read_input_whole(path):
