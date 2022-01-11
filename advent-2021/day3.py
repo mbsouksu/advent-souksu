@@ -5,18 +5,22 @@ from collections import Counter
 with open('inputs/day3_input.txt', 'r') as f:
     file = f.read().splitlines()
 
-def q1(file):
-    gamma_rate = []
-    for i in range(len(file[0])-1):
-        elements = Counter(map(itemgetter(i), file))
-        common_bit = elements.most_common(1)[0][0]
-        gamma_rate.append(common_bit)
-    epsilon_rate = int(''.join( ['1' if i == '0' else '0' for i in gamma_rate ]), 2)
-    gamma_rate = int(''.join(gamma_rate), 2)
-    
-    return gamma_rate * epsilon_rate
-    #3901196
+def q1(file, rate: str):
+    rate_types = ['gamma', 'epsilon']
+    if rate not in rate_types:
+        raise ValueError("rate must be one of %r." % rate_types)
+        
+    elements = Counter(map(itemgetter(0), file))
+    if rate == 'gamma':
+        common_bit = elements.most_common()[0][0]
+    elif rate == 'epsilon':
+        common_bit = elements.most_common()[1][0]
 
+    if len(file[0]) == 1:
+        return common_bit
+    else:
+        file = [x[1:] for x in file]
+        return common_bit + q1(file, rate)
 
 
 def q2(file, tiebreaker):
@@ -38,7 +42,10 @@ def q2(file, tiebreaker):
 
 if __name__ == '__main__':
 
-    print(q1(file))
+    gamma = int(q1(file, 'gamma'), 2)
+    epsilon = int(q1(file, 'epsilon'), 2)
+    print(gamma * epsilon) #Answer: 3901196
+    
     oxygen = int(q2(file, 1), 2)
     co2 =  int(q2(file, 0), 2)
     print(oxygen * co2) #Answer: 4412188
