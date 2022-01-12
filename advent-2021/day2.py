@@ -1,6 +1,9 @@
 from utils.utils import read_input
 
-file=read_input('inputs/day2_input.txt')
+
+with open('inputs/day2_input.txt', 'r') as f:
+    file = f.read().splitlines()
+
 
 def q1(file):
     horizontal, depth = 0, 0
@@ -12,8 +15,8 @@ def q1(file):
                 depth += int(x)
             case [_, x]:
                 depth -= int(x)
-    print(f'Answer: {horizontal*depth}')
-    #1815044
+    return horizontal*depth
+    
 
 def q2(file):
     horizontal, depth, aim = 0, 0, 0
@@ -26,8 +29,8 @@ def q2(file):
                 aim += int(x)
             case [_, x]:
                 aim -= int(x)
-    print(f'Answer: {horizontal*depth}')
-    #1739283308
+    return horizontal*depth
 
 if __name__ == '__main__':
-    q2(file)
+    print(q1(file)) #Answer: 1815044
+    print(q2(file)) #Answer: 1739283308
