@@ -1,9 +1,9 @@
-from utils.utils import read_input
 from itertools import pairwise, islice
 import collections
 
-file=read_input('inputs/day1_input.txt')
-file=list(map(int, file))
+with open('inputs/day1_input.txt', 'r') as f:
+    file = f.read().splitlines()
+    file=list(map(int, file))
 
 def q1(file):
     
@@ -15,8 +15,7 @@ def q1(file):
             count += 1
         previous_number = file[i]
     
-    print(f'Answer: {count}')
-    #1393
+    return count
 
 def q2(file):
     previous_sum = sum(file[:3])
@@ -26,28 +25,9 @@ def q2(file):
             count += 1  
         previous_sum = a + b + c
 
-    print(f'Answer: {count}')
-    #1359
+    return count
 
-def sliding_window(iterable, n): #from python recipes
-    # sliding_window('ABCDEFG', 4) -> ABCD BCDE CDEF DEFG
-    it = iter(iterable)
-    window = collections.deque(islice(it, n), maxlen=n)
-    if len(window) == n:
-        yield list(window)
-    for x in it:
-        window.append(x)
-        yield list(window)
-
-def q2_v2(file):
-    previous_sum = sum(next(sliding_window(file, 3)))
-    count = 0
-    for a in sliding_window(file[1:], 3):
-        if sum(a) > previous_sum:
-            count += 1  
-        previous_sum = sum(a)
-
-    print(f'Answer: {count}')
 
 if __name__ == '__main__':
-    q2(file)
+    print(q1(file)) #Answer: 1393
+    print(q2(file)) #Answer: 1359

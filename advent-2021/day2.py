@@ -1,6 +1,3 @@
-from utils.utils import read_input
-
-
 with open('inputs/day2_input.txt', 'r') as f:
     file = f.read().splitlines()
 
